@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :users
   get 'home/index'
   get 'main/index'
+  get 'cookie/new'
+  post 'cookie/sign_in', to: 'cookie#create'
   resources :members
   
   root 'home#index'

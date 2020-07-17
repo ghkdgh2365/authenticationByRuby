@@ -1,5 +1,9 @@
 <h2> Hello World ! </h2>
 
-<a href="#"> 로그인 </a>
+<% if current_user.present? %>
+  <a href="#"> 로그아웃 </a>
+<% else %>
+<a href="/cookie/new"> 로그인 </a>
+<% end %>
 <hr/>
 <%= link_to "회원가입", new_user_path %>
