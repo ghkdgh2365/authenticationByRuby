@@ -1,9 +1,13 @@
 <h2> Hello World ! </h2>
 
 <% if current_user.present? %>
-  <a href="#"> 로그아웃 </a>
+  <%= link_to "쿠키 로그아웃", cookie_sign_out_path, method: :delete %>
+  <%= link_to "세션 로그아웃", sessions_sign_out_path, method: :delete %>
+  <%= link_to "jwt 로그아웃", auth_sign_out_path, method: :delete %>
 <% else %>
-<a href="/cookie/new"> 로그인 </a>
+  <%= link_to "쿠키 로그인", cookie_new_path %>
+  <%= link_to "세션 로그인", sessions_sign_in_path %>
+  <%= link_to "jwt 로그인", auth_sign_in_path %>
 <% end %>
 <hr/>
 <%= link_to "회원가입", new_user_path %>

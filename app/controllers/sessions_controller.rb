@@ -1,15 +1,14 @@
-class CookieController < ApplicationController
+class SessionsController < ApplicationController
   def new
   end
-
+  
   def create
     if params[:email].present? && params[:password].present?
       user = User.find_by(email: params[:email])
-      if user.present?
+      if user
         if user.authenticate(params[:password])
-          cookies[:email] = user.email
-          cookies[:password] = user.password_digest
-          flash[:notice] = "로그인 성공"
+          session[:user_id] = user.id
+          flash[:notice] = "세션 로그인 성공"
           redirect_to '/home/index'
           return
         else
@@ -19,16 +18,16 @@ class CookieController < ApplicationController
         flash[:notice] = "잘못된 이메일입니다. 다시 확인해주세요."
       end
     else
-      flash[:notice] = "이메일, 패스워드 모두 입력해주세요."
+      flash[:notice] = "이메일, 비밀번호 모두 입력해주세요"
     end
-    redirect_to cookie_new_path
+    redirect_to sessions_sign_in_path
   end
 
   def destroy
     if current_user.present?
-      cookies.delete :email
-      cookies.delete :password
-      redirect_to cookie_new_path
+      reset_session
+      flash[:notice] = "세션 로그아웃 성공"
+      redirect_to '/home/index'
     end
   end
 end
